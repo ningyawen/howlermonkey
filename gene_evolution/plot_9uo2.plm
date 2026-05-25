@@ -1,0 +1,80 @@
+# 1. 初始化并下载 9UO2 结构
+reinitialize
+fetch 9uo2, async=0
+
+# 设置全局背景为白色
+bg_color white
+
+# 2. 基本展示设置 (区分四条链的颜色)
+hide everything
+show cartoon
+color lightblue, chain A
+color palegreen, chain B
+color lightpink, chain C
+color palecyan, chain D
+
+# 3. 定义相互作用位点 (注：这里使用 resi 19 锁定第19位，兼容LEC/LEU)
+select A_19, chain A and resi 19
+select C_19, chain C and resi 19
+
+# 选取 4.5 A 范围内发生相互作用的氨基酸 (byres 确保选中整个氨基酸的侧链)
+select B_interact, byres (chain B and (A_19 around 4.5))
+select D_interact, byres (chain D and (C_19 around 4.5))
+
+# 4. 显示相互作用氨基酸的侧链 (Sticks)
+show sticks, A_19 or B_interact
+show sticks, C_19 or D_interact
+
+# 按原子着色侧链 (保持碳原子原色，氧红氮蓝等，使图更专业)
+util.cnc A_19 or B_interact or C_19 or D_interact
+
+# 5. 绘制相互作用虚线 (截断值为 4.5 A，mode=0表示计算所有满足条件的原子间距离)
+distance dist_AB, A_19, B_interact, 4.5, mode=0
+distance dist_CD, C_19, D_interact, 4.5, mode=0
+
+# 虚线美化设置
+color yellow, dist_AB
+color yellow, dist_CD
+set dash_gap, 0.3
+set dash_radius, 0.05
+set dash_color, yellow
+
+# ==========================================
+# 第一张图：整体概览 (包含 A-B 和 C-D)
+# ==========================================
+# 调整视角看清整体
+center 9uo2
+zoom 9uo2
+orient
+
+# 关闭图一的距离数值标签和氨基酸名称标签 (根据你的要求)
+hide labels, dist_AB
+hide labels, dist_CD
+
+# 输出第一张图 (命名为 overview_9uo2.png)
+png overview_9uo2.png, width=1600, height=1200, dpi=300, ray=1
+
+# ==========================================
+# 第二张图：局部放大 (仅可视化 Chain A 19 和 Chain B)
+# ==========================================
+# 隐藏 C和D链 相关的距离线和侧链，防止干扰视野
+disable dist_CD
+hide sticks, C_19 or D_interact
+
+# 聚焦并放大到 A_19 和 B_interact，buffer=2 留出一定边缘空间
+zoom (A_19 or B_interact), buffer=2
+
+# 打开距离数值的标签
+# show labels, dist_AB
+
+# 标签美化 (调整大小和颜色以便看清)
+# set label_size, 20
+# set label_color, black
+# set label_position, (1.5, 1.5, 1.5)
+
+# 输出第二张图 (命名为 detail_A19_B.png)
+png detail_A19_B.png, width=1600, height=1200, dpi=300, ray=1
+
+# 恢复显示所有对象(可选，为了后续你能继续在UI里观察)
+enable dist_CD
+show sticks, C_19 or D_interact
