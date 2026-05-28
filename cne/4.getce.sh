@@ -23,19 +23,19 @@ wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/hg38.ncbiR
 wget -c https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/hg38.refGene.gtf.gz
 
 gunzip hg38.ensGene.gtf.gz hg38.knownGene.gtf.gz  hg38.ncbiRefSeq.gtf.gz  hg38.refGene.gtf.gz
-for gtf in hg38.ensGene.gtf hg38.knownGene.gtf  hg38.ncbiRefSeq.gtf  hg38.refGene.gtf; do grep -v  awk '{if($3=="exon")print $1"\t"$4-1-50"\t"$5+50}' ${WORKDIR}/cne/representativetrans/${gtf} > ${WORKDIR}/cne/representativetrans/${gtf%.gtf*}.exon.bed; done
 
-#exon 30bp 
+
+#exon 10bp 
 for gtf in hg38.ensGene.gtf hg38.knownGene.gtf hg38.ncbiRefSeq.gtf hg38.refGene.gtf; do
   awk 'BEGIN{OFS="\t"} $3=="exon" {
-    start = $4 - 1 - 30;
-    end = $5 + 30;
+    start = $4 - 1 - 10;
+    end = $5 + 10;
     if (start < 0) start = 0;
     print $1, start, end
-  }' ${WORKDIR}/cne/representativetrans/${gtf} > ${WORKDIR}/cne/representativetrans/${gtf%.gtf*}.exonflanking30bp.bed
+  }' ${WORKDIR}/cne/representativetrans/${gtf} > ${WORKDIR}/cne/representativetrans/${gtf%.gtf*}.exonflanking10bp.bed
 done
 
-cat hg38*flanking30bp.bed > hg38.allexon.exonflanking30bp.bed
+cat hg38*flanking10bp.bed > hg38.allexon.exonflanking10bp.bed
 
-for i in $(ls ${WORKDIR}/cne/mergece); do bedtools subtract -a ${WORKDIR}/cne/mergece/$i -b ${WORKDIR}/cne/representativetrans/hg38.allexon.exonflanking30bp.bed -A > ${WORKDIR}/cne/cne/${i%maf*}cne.exonflanking30bp.bed; done
+for i in $(ls ${WORKDIR}/cne/mergece); do bedtools subtract -a ${WORKDIR}/cne/mergece/$i -b ${WORKDIR}/cne/representativetrans/hg38.allexon.exonflanking10bp.bed -A > ${WORKDIR}/cne/cne/${i%maf*}cne.exonflanking10bp.bed; done
 
