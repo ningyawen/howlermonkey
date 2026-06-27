@@ -17,9 +17,6 @@ grep 'ENST00000415431.FBP1' -A 1 codon.fasta | grep 'QUERY' -A 1 | sed 's/ //g' 
 cat checked_ENST00000415431.FBP1.fasta | sed 's/-//g' | sed 's/XXX/NNN/g' > primate.FBP1.fasta
 java -jar ${WORKDIR}/software/macse_v2.07.jar -prog alignSequences -seq primate.FBP1.fasta
 
-
-seqkit translate --frame 1 /home/liunyw/project/howler_monkey/FBP_genefamily/plot_align/plot_FBP1.fa | seqkit seq -w 0 > /home/liunyw/project/howler_monkey/FBP_genefamily/plot_align/plot_FBP1.aa.fa
-
 seqkit translate --frame 1 /home/liunyw/project/howler_monkey/FBP_genefamily/plot_align/plot.nucl.fa | seqkit seq -w 0 > /home/liunyw/project/howler_monkey/FBP_genefamily/plot_align/plot.aa.fa
 
 /home/liunyw/miniforge3/envs/R-base/bin/Rscript /home/liunyw/project/howler_monkey/FBP_genefamily/plot_align/plotmsa.r
