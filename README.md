@@ -12,7 +12,7 @@ The workflows are organized systematically to ensure the maximum reproducibility
 Contains pipelines for de novo genome assembly,comprehensive gene annotation, and multi-dimensional quality control.
 * **Genome Assembly:** Scripts and parameter configurations for long-read de novo assembly.
 * **Gene Annotation:** Homology-based and ab initio gene annotation workflows implementing TOGA and the egapx pipeline.
-* **Quality Assessment:** Comprehensive quality validation checking genome completeness via BUSCO and QUAST, calculating k-mer based accuracy and consensus quality via Merqury, and filtering assemblies for structural errors using HMM-Flagger.
+* **Quality Assessment:** Comprehensive quality validation checking genome completeness via BUSCO and QUAST, calculating k-mer based accuracy and consensus quality via Merqury, and identifying structural errors using HMM-Flagger.
 
 ### 2. Phylogenomic Analysis
 Pipelines for reconstructing a robust species-level phylogenetic tree.
@@ -44,15 +44,30 @@ Evolutionary genomics workflows for investigating coding-sequence evolution, inc
 * **Gene Family Dynamics:** Workflows tracking the expansion, contraction, and overall birth-and-death dynamics of gene families across the primate tree.
 * **FoldX & PyMOL Biophysical Evaluation:** Biophysical modeling workflows utilizing FoldX (v5.0) for automated structural relaxation (RepairPDB) and free energy calculation (BuildModel, Delta-Delta G) of positively selected sites (PSS), combined with PyMOL scripts for inter-atomic distance and interface remodeling visualization.
 
-### 6. Functional Enrichment Analysis
+### 6. FBP1 Gene Family Analysis
+Targeted workflows characterizing the FBP1/FBP2 gene family duplication underlying the folivorous metabolic adaptation.
+* **Ortholog Retrieval:** Extraction of FBP1/FBP2 coding sequences across primates from TOGA-based annotations.
+* **Gene Tree Construction:** Phylogenetic tree inference (IQ-TREE) to resolve the duplication topology.
+* **Synteny Chain Plot:** UCSC chain-track generation for the duplicated locus.
+* **Alignment Visualization:** Multiple sequence alignment and per-residue alignment plots (ggmsa) across primates.
+* **Purifying Selection Test:** Branch and branch-site selection analyses (FitMG94, PAML, HyPhy RELAX) on the duplicated paralogs.
+* **Sequencing Depth Validation:** Read-depth and genome-track based confirmation of the FBP1 duplication in the howler monkey assembly.
+
+### 7. Functional Enrichment Analysis
 Downstream statistical and systems biology frameworks to profile the functional landscape of adaptive and expanded genes.
 * **Functional Enrichment:** Custom R scripts leveraging gProfiler to perform automated GO (Gene Ontology) and KEGG pathway enrichment tracking.
 * **Tissue Enrichment:** Specialized spatial expression profiling utilizing TissueEnrich to determine the tissue-specific expression landscapes of targeted gene subsets.
 
-### 7. Structural Variant Analysis
+### 8. Structural Variant Analysis
 Dedicated structural pipelines for identifying, characterizing, and plotting large-scale genomic structural variations (SVs).
 * **Targeted SV Analysis:** Structural variation extraction, mapping, and multi-sequence confirmation tracking the complex locus-level variants altering the CHIA and ASIP genes.
 * **SV Mapping Tracks:** Script integration using pygenometracks to generate clean, publication-grade genomic track plots mapping structural variations, read coverages, and feature annotations across comparative loci.
+
+---
+
+## License
+
+This repository is released under the [MIT License](LICENSE).
 
 ---
 
